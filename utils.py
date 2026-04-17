@@ -1,3 +1,4 @@
+# Pharma-Guard AI Utility Module
 import os
 import json
 import base64
