@@ -1,0 +1,21 @@
+# Ignore environment variables
+.env
+.env.template
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+
+# Streamlit
+.streamlit/
+static/
+
+# Media and Reports
+reports/
+temp_uploads/
+
+# RAG Database
+chroma_db/
