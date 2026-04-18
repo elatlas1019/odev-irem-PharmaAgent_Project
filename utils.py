@@ -40,7 +40,7 @@ def get_vision_analysis(image_path):
                     ],
                 }
             ],
-            model="meta-llama/llama-4-scout-17b-16e-instruct",
+            model="llama-3.2-90b-vision-preview",
         )
         response_text = chat_completion.choices[0].message.content
         # Clean potential markdown
@@ -72,14 +72,14 @@ class ModernPharmaPDF(FPDF):
                     pass
 
     def header(self):
-        self.set_fill_color(30, 41, 59) # Slate Dark
+        self.set_fill_color(14, 165, 233) # Medical Blue
         self.rect(0, 0, 210, 40, 'F')
         self.set_text_color(255, 255, 255)
         
         # Determine font and style
         font_name = 'ArialCustom' if 'ArialCustom' in self.fonts else 'helvetica'
         self.set_font(font_name, 'B', 20)
-        self.cell(0, 20, 'PHARMA-GUARD AI INTELLIGENCE', 0, 1, 'C')
+        self.cell(0, 20, 'odev-irem-PharmaAgent_Project', 0, 1, 'C')
         self.ln(10)
 
     def footer(self):
@@ -94,7 +94,7 @@ class ModernPharmaPDF(FPDF):
             self.set_font(font_name, '', 8)
             
         self.set_text_color(128, 128, 128)
-        self.cell(0, 10, f'Autonomous Groq-Powered Report | Page {self.page_no()}', 0, 0, 'C')
+        self.cell(0, 10, f'PharmaAgent AI Raporu - Gelistirici: IREM BURCU ORHAN | Sayfa {self.page_no()}', 0, 0, 'C')
 
 def generate_pdf_report(data, output_path):
     pdf = ModernPharmaPDF()
@@ -103,24 +103,31 @@ def generate_pdf_report(data, output_path):
     pdf.set_text_color(0, 0, 0)
     
     sections = [
-        ("IDENTITY SUMMARY", data.get("summary", "N/A")),
-        ("INDICATIONS", data.get("indications", "N/A")),
-        ("BIO-SAFETY ALERTS", data.get("warnings", "N/A")),
-        ("MOLECULAR DETAILS", data.get("details", "N/A")),
-        ("RETRIEVAL SOURCES", data.get("sources", "N/A"))
+        ("KIMLIK OZETI", data.get("summary", "N/A")),
+        ("KULLANIM AMACI", data.get("indications", "N/A")),
+        ("BIYO-GUVENLIK UYARILARI", data.get("warnings", "N/A")),
+        ("FARMAKOLOJIK DETAYLAR", data.get("details", "N/A")),
+        ("KAYNAKCA", data.get("sources", "N/A"))
     ]
 
     font_name = 'ArialCustom' if 'ArialCustom' in pdf.fonts else 'helvetica'
 
+    def _safe_text(text):
+        if font_name == 'helvetica':
+            replacements = {'ı':'i', 'İ':'I', 'ğ':'g', 'Ğ':'G', 'ü':'u', 'Ü':'U', 'ş':'s', 'Ş':'S', 'ö':'o', 'Ö':'O', 'ç':'c', 'Ç':'C'}
+            for tr, en in replacements.items():
+                text = text.replace(tr, en)
+        return text
+
     for title, content in sections:
         pdf.set_font(font_name, 'B', 14)
-        pdf.set_text_color(244, 63, 94) # Rose/Coral
-        pdf.cell(0, 10, title, ln=True)
+        pdf.set_text_color(14, 165, 233) # Medical Blue
+        pdf.cell(0, 10, _safe_text(title), ln=True)
         pdf.ln(2)
         
         pdf.set_font(font_name, '', 11)
-        pdf.set_text_color(30, 41, 59)
-        pdf.multi_cell(0, 6, str(content))
+        pdf.set_text_color(15, 23, 42)
+        pdf.multi_cell(0, 6, _safe_text(str(content)))
         pdf.ln(8)
         pdf.line(10, pdf.get_y(), 200, pdf.get_y())
         pdf.ln(5)

@@ -123,7 +123,7 @@ class PharmaGuardOrchestrator:
                 "indications": "Prospektüs verisine dayalı kullanım...",
                 "warnings": safety_report,
                 "details": corp_report,
-                "sources": "PharmaGuard RAG Engine v2.0 (Groq-Powered)",
+                "sources": "PharmaAgent Intelligence (Geliştirici: İREM BURCU ORHAN)",
                 "full_text": final_report
             }
         except Exception as e:
