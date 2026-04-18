@@ -40,7 +40,7 @@ def get_vision_analysis(image_path):
                     ],
                 }
             ],
-            model="llama-3.2-90b-vision-preview",
+            model="meta-llama/llama-4-scout-17b-16e-instruct",
         )
         response_text = chat_completion.choices[0].message.content
         # Clean potential markdown
